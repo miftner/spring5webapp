@@ -8,17 +8,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class BookController {
 
-  private final BookRepository bookRepository;
+    private final BookRepository bookRepository;
 
-  public BookController(BookRepository bookRepository) {
-    this.bookRepository = bookRepository;
-  }
+    public BookController(BookRepository bookRepository) {
+        this.bookRepository = bookRepository;
+    }
 
-  @RequestMapping("/books")
-  public String getBooks(Model model){
+    @RequestMapping("/books")
+    public String getBooks(Model model){
 
-    model.addAttribute("books", bookRepository.findAll());
+        model.addAttribute("books", bookRepository.findAll());
 
-    return "books";
-  }
+        // Wird hier genutzt, um den anzuzeigenden Ordner zu spezifizieren
+        return "books/list";
+    }
 }

@@ -12,22 +12,18 @@ import org.springframework.stereotype.Component;
 @Component
 public class BootStrapData implements CommandLineRunner {
 
-  private final AuthorRepository authorRepository;
-  private final BookRepository bookRepository;
-  private final PublisherRepository publisherRepository;
+    private final AuthorRepository authorRepository;
+    private final BookRepository bookRepository;
+    private final PublisherRepository publisherRepository;
 
-  @SuppressWarnings("checkstyle:MissingJavadocMethod")
-  public BootStrapData(AuthorRepository authorRepository,
-                       BookRepository bookRepository,
-                       PublisherRepository publisherRepository) {
-    this.authorRepository = authorRepository;
-    this.bookRepository = bookRepository;
-    this.publisherRepository = publisherRepository;
-  }
+    public BootStrapData(AuthorRepository authorRepository, BookRepository bookRepository, PublisherRepository publisherRepository) {
+        this.authorRepository = authorRepository;
+        this.bookRepository = bookRepository;
+        this.publisherRepository = publisherRepository;
+    }
 
-  @SuppressWarnings("checkstyle:AbbreviationAsWordInName")
-  @Override
-  public void run(String... args) throws Exception {
+    @Override
+    public void run(String... args) throws Exception {
 
     Publisher publisher =
         new Publisher("Hans",
@@ -38,8 +34,9 @@ public class BootStrapData implements CommandLineRunner {
             "Berlin",
             "Germany");
 
-    publisherRepository.save(publisher);
+        publisherRepository.save(publisher);
 
+        System.out.println("Publisher Count: " + publisherRepository.count());
 
     Author eric = new Author("Eric", "Evans");
     Book ddd = new Book("Domain Driven Design", "12234");
@@ -52,21 +49,19 @@ public class BootStrapData implements CommandLineRunner {
     bookRepository.save(ddd);
     publisherRepository.save(publisher);
 
-    Author rod = new Author("Rod", "Johnson");
-    Book noEJB = new Book("J2EE Development without EJB", "53245664435643");
-    rod.getBooks().add(noEJB);
-    noEJB.getAuthors().add(rod);
-    noEJB.setPublisher(publisher);
-    publisher.getBooks().add(noEJB);
+        Author rod = new Author("Rod", "Johnson");
+        Book noEJB = new Book("J2EE Development without EJB", "3939459459");
+        rod.getBooks().add(noEJB);
+        noEJB.getAuthors().add(rod);
+
+        noEJB.setPublisher(publisher);
+        publisher.getBooks().add(noEJB);
 
     authorRepository.save(rod);
     bookRepository.save(noEJB);
     publisherRepository.save(publisher);
 
-    System.out.println("Started in Bootstrap");
-    System.out.println("Number of Books: " + bookRepository.count());
-
-    System.out.println("Number of Publishers: " + publisherRepository.count());
-    System.out.println("Publisher number of Books: " + publisher.getBooks().size());
-  }
+        System.out.println("Number of Books: " + bookRepository.count());
+        System.out.println("Publisher Number of Books: " + publisher.getBooks().size());
+    }
 }
